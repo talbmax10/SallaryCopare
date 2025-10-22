@@ -84,8 +84,9 @@ export function convertRowsToJSON(rows: unknown[][]): Record<string, unknown>[] 
 }
 
 /**
- * Exports comparison results to an Excel file
+ * Exports comparison results to an Excel file with formatting
  * @param results - The comparison results to export
+ * @param keyField - The key field name
  * @param filename - Name of the output file
  */
 export function exportToExcel(
@@ -95,6 +96,7 @@ export function exportToExcel(
     data: Record<string, unknown>;
     differences?: Record<string, { before: unknown; after: unknown }>;
   }>,
+  keyField: string = 'Key',
   filename: string = 'comparison-results.xlsx'
 ) {
   const worksheetData: unknown[][] = [];
@@ -103,24 +105,56 @@ export function exportToExcel(
   if (results.length > 0) {
     const firstResult = results[0];
     const headers = [
-      'Status',
-      'Key',
-      ...Object.keys(firstResult.data),
+      'الحالة',
+      keyField,
+      ...Object.keys(firstResult.data).filter((key) => key !== keyField),
     ];
     worksheetData.push(headers);
 
-    // Add data rows
+    // Add data rows with details about changes
     results.forEach((result) => {
+      const statusArabic =
+        result.type === 'added'
+          ? 'مضافة'
+          : result.type === 'removed'
+          ? 'محذوفة'
+          : 'متغيرة';
+
+      const dataKeys = Object.keys(firstResult.data).filter(
+        (key) => key !== keyField
+      );
       const row = [
-        result.type.toUpperCase(),
+        statusArabic,
         result.keyValue,
-        ...Object.values(result.data),
+        ...dataKeys.map((key) => result.data[key]),
       ];
       worksheetData.push(row);
+
+      // Add difference details for changed rows
+      if (result.differences && Object.keys(result.differences).length > 0) {
+        const differenceRow = ['تفاصيل التغييرات', ''];
+        dataKeys.forEach((key) => {
+          if (result.differences?.[key]) {
+            differenceRow.push(
+              `من: ${result.differences[key].before} → إلى: ${result.differences[key].after}`
+            );
+          } else {
+            differenceRow.push('');
+          }
+        });
+        worksheetData.push(differenceRow);
+      }
     });
   }
 
   const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+
+  // Set column widths for better readability
+  const maxColWidth = 30;
+  worksheet['!cols'] = Array(worksheetData[0]?.length || 1).fill({
+    wch: maxColWidth,
+  });
+
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, 'Results');
   XLSX.writeFile(workbook, filename);
