@@ -285,10 +285,10 @@ export default function CompareDashboard() {
             <div className="flex flex-col md:flex-row gap-4 mt-8">
               <button
                 onClick={handleCompare}
-                disabled={loading || !keyField}
+                disabled={loading || !keyField || !file1 || !file2}
                 className={cn(
                   'flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold transition-colors',
-                  loading || !keyField
+                  loading || !keyField || !file1 || !file2
                     ? 'bg-slate-300 text-slate-500 cursor-not-allowed'
                     : 'bg-blue-600 text-white hover:bg-blue-700'
                 )}
