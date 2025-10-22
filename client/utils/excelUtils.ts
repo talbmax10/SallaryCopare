@@ -18,7 +18,7 @@ export async function parseExcelFile(
     reader.onload = (e) => {
       try {
         const data = e.target?.result;
-        const workbook = XLSX.read(data, { type: 'array' });
+        const workbook = XLSX.read(data, { type: 'array', cellDates: true });
 
         const sheets: Record<string, unknown[][]> = {};
         const allColumns = new Set<string>();
@@ -26,7 +26,7 @@ export async function parseExcelFile(
 
         sheetNames.forEach((sheetName) => {
           const worksheet = workbook.Sheets[sheetName];
-          const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+          const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
 
           sheets[sheetName] = jsonData as unknown[][];
 
@@ -34,14 +34,17 @@ export async function parseExcelFile(
           if (jsonData.length > 0) {
             const headers = jsonData[0];
             if (Array.isArray(headers)) {
-              headers.forEach((header) => {
-                if (header) allColumns.add(String(header));
+              headers.forEach((header, index) => {
+                // Use header value if available, otherwise use column letter
+                const headerStr = header ? String(header).trim() : `Column ${index + 1}`;
+                if (headerStr) allColumns.add(headerStr);
               });
             }
           }
         });
 
         const columns = Array.from(allColumns);
+        console.log('Parsed columns:', columns);
         resolve({ sheets, columns, sheetNames });
       } catch (error) {
         reject(new Error(`Failed to parse Excel file: ${error}`));
