@@ -53,8 +53,13 @@ export default function CompareDashboard() {
         return;
       }
 
-      const headers = getColumnHeaders(rows);
+      const headers = parsed.columns.length > 0 ? parsed.columns : getColumnHeaders(rows);
       const jsonData = convertRowsToJSON(rows);
+
+      if (headers.length === 0) {
+        setError('الملف لا يحتوي على أعمدة صحيحة');
+        return;
+      }
 
       if (isFirstFile) {
         setFile1(file);
@@ -67,6 +72,7 @@ export default function CompareDashboard() {
       }
     } catch (err) {
       setError(`خطأ في تحميل الملف: ${err}`);
+      console.error('File upload error:', err);
     }
   };
 
