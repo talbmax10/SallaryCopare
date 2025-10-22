@@ -240,7 +240,7 @@ export default function CompareDashboard() {
         </div>
 
         {/* Configuration Section */}
-        {file1 && file2 && availableColumns.length > 0 && (
+        {(file1 || file2) && (
           <div className="bg-white rounded-lg shadow p-6 mb-8">
             {/* Key Field Selection */}
             <div className="mb-6">
@@ -346,7 +346,7 @@ export default function CompareDashboard() {
                 <Search className="absolute right-3 top-3 text-slate-400" size={20} />
                 <input
                   type="text"
-                  placeholder="ابحث ع�� موظف..."
+                  placeholder="ابحث عن موظف..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full pl-4 pr-10 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
