@@ -181,7 +181,7 @@ export default function CompareDashboard() {
             مقارن الرواتب
           </h1>
           <p className="text-slate-600">
-            قارن البيانات بين ملفي Excel واكتشف التغييرات والإضافات والحذف
+            قارن البيانات بين ملفي Excel واكتشف التغيير��ت والإضافات والحذف
           </p>
         </div>
 
@@ -269,9 +269,29 @@ export default function CompareDashboard() {
 
             {/* Excluded Columns */}
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-3">
-                الأعمدة المستثناة من المقارنة
-              </label>
+              <div className="flex items-center justify-between mb-3">
+                <label className="block text-sm font-semibold text-slate-700">
+                  الأعمدة المستثناة من المقارنة
+                </label>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => {
+                      setExcludedColumns(new Set(availableColumns));
+                    }}
+                    className="text-xs px-2 py-1 bg-slate-200 text-slate-700 rounded hover:bg-slate-300 transition-colors"
+                  >
+                    تحديد الكل
+                  </button>
+                  <button
+                    onClick={() => {
+                      setExcludedColumns(new Set());
+                    }}
+                    className="text-xs px-2 py-1 bg-slate-200 text-slate-700 rounded hover:bg-slate-300 transition-colors"
+                  >
+                    إلغاء الكل
+                  </button>
+                </div>
+              </div>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                 {availableColumns.map((col) => (
                   <label key={col} className="flex items-center gap-2 cursor-pointer">
