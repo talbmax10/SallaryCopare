@@ -1,5 +1,6 @@
 /** @import must precede all other statements */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -103,8 +104,14 @@
     @apply border-border;
   }
 
+  html {
+    direction: rtl;
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-family: 'Noto Sans Arabic', 'Segoe UI', Arial, sans-serif;
+    font-size: 14px;
   }
 
   :where(p, span, li, h1, h2, h3, h4, h5, h6, a, button, label, td, th) {
