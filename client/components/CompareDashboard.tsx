@@ -95,7 +95,7 @@ export default function CompareDashboard() {
     }
 
     if (!keyField) {
-      setError('يجب اختيار مفتاح الربط');
+      setError('يجب اختيار مفتاح ��لربط');
       return;
     }
 
@@ -166,7 +166,8 @@ export default function CompareDashboard() {
         differences: diff.differences,
       }));
 
-      exportToExcel(exportData, `comparison-${new Date().getTime()}.xlsx`);
+      const timestamp = new Date().toLocaleDateString('ar-EG').replace(/\//g, '-');
+      exportToExcel(exportData, keyField, `comparison-${timestamp}.xlsx`);
     } catch (err) {
       setError(`خطأ في التصدير: ${err}`);
     }
@@ -181,7 +182,7 @@ export default function CompareDashboard() {
             مقارن الرواتب
           </h1>
           <p className="text-slate-600">
-            قارن البيانات بين ملفي Excel واكتشف التغيير��ت والإضافات والحذف
+            قارن البيانات بين ملفي Excel واكتشف التغييرات والإضافات والحذف
           </p>
         </div>
 
