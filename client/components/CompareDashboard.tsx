@@ -362,13 +362,13 @@ export default function CompareDashboard() {
 
             {/* Results Table */}
             {displayResults.allDiffs.length > 0 ? (
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+              <div className="overflow-x-auto" dir="rtl">
+                <table className="w-full text-sm" style={{ direction: 'rtl' }}>
                   <thead>
                     <tr className="border-b-2 border-slate-300">
-                      <th className="px-4 py-3 text-right text-slate-600 font-semibold">الحالة</th>
+                      <th className="px-4 py-3 text-right text-slate-600 font-semibold whitespace-nowrap">الحالة</th>
                       <th
-                        className="px-4 py-3 text-right text-slate-600 font-semibold cursor-pointer hover:text-blue-600"
+                        className="px-4 py-3 text-right text-slate-600 font-semibold cursor-pointer hover:text-blue-600 whitespace-nowrap"
                         onClick={() => {
                           if (sortField === keyField) {
                             setSortAscending(!sortAscending);
@@ -378,9 +378,9 @@ export default function CompareDashboard() {
                           }
                         }}
                       >
-                        {keyField}
+                        <span>{keyField}</span>
                         {sortField === keyField && (
-                          <span className="mr-2">
+                          <span className="ml-2">
                             {sortAscending ? '↑' : '↓'}
                           </span>
                         )}
@@ -390,7 +390,7 @@ export default function CompareDashboard() {
                         .map((col) => (
                           <th
                             key={col}
-                            className="px-4 py-3 text-right text-slate-600 font-semibold cursor-pointer hover:text-blue-600"
+                            className="px-4 py-3 text-right text-slate-600 font-semibold cursor-pointer hover:text-blue-600 whitespace-nowrap"
                             onClick={() => {
                               if (sortField === col) {
                                 setSortAscending(!sortAscending);
@@ -400,9 +400,9 @@ export default function CompareDashboard() {
                               }
                             }}
                           >
-                            {col}
+                            <span>{col}</span>
                             {sortField === col && (
-                              <span className="mr-2">
+                              <span className="ml-2">
                                 {sortAscending ? '↑' : '↓'}
                               </span>
                             )}
@@ -430,10 +430,10 @@ export default function CompareDashboard() {
 
                       return (
                         <tr key={index} className={cn('border-b border-slate-200 hover:bg-opacity-75', bgColor)}>
-                          <td className="px-4 py-3 font-semibold">
+                          <td className="px-4 py-3 font-semibold text-right">
                             <span
                               className={cn(
-                                'px-3 py-1 rounded text-xs font-bold',
+                                'px-3 py-1 rounded text-xs font-bold inline-block',
                                 diff.type === 'added'
                                   ? 'bg-green-200 text-green-800'
                                   : diff.type === 'removed'
@@ -444,8 +444,8 @@ export default function CompareDashboard() {
                               {statusLabel}
                             </span>
                           </td>
-                          <td className="px-4 py-3 font-semibold">
-                            {diff.keyValue}
+                          <td className="px-4 py-3 font-semibold text-right" style={{ direction: 'rtl' }}>
+                            {String(diff.keyValue)}
                           </td>
                           {availableColumns
                             .filter((col) => !excludedColumns.has(col) && col !== keyField)
@@ -453,12 +453,13 @@ export default function CompareDashboard() {
                               <td
                                 key={col}
                                 className={cn(
-                                  'px-4 py-3',
+                                  'px-4 py-3 text-right',
                                   diff.differences?.[col] && 'bg-opacity-50 font-semibold'
                                 )}
+                                style={{ direction: 'rtl' }}
                               >
                                 <div>
-                                  <div>
+                                  <div className="whitespace-normal break-words">
                                     {String(dataToShow[col] || '-')}
                                   </div>
                                   {diff.differences?.[col] && (
