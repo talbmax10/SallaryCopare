@@ -15,6 +15,8 @@
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build",
     "build:server": "vite build --config vite.config.server.ts",
+    "build:github-pages": "VITE_GITHUB_PAGES=true vite build",
+    "build:github-pages:windows": "set VITE_GITHUB_PAGES=true && vite build",
     "start": "node dist/server/node-build.mjs",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
