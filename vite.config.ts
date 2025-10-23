@@ -3,13 +3,14 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { createServer } from "./server";
 
-// Get base path from environment or use default
+// Get base path - use repository name for GitHub Pages
 const getBasePath = (): string => {
-  if (process.env.VITE_GITHUB_PAGES === "true") {
-    // For GitHub Pages: https://username.github.io/repo-name/
-    const repoName = process.env.VITE_REPO_NAME || "";
-    return repoName ? `/${repoName}/` : "/";
+  // If VITE_REPO_NAME is set, use it (from GitHub Actions env)
+  const repoName = process.env.VITE_REPO_NAME || "";
+  if (repoName) {
+    return `/${repoName}/`;
   }
+  // Default to root for local development
   return "/";
 };
 
@@ -26,6 +27,7 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     outDir: "dist/spa",
+    emptyOutDir: true,
   },
   plugins: [react(), expressPlugin()],
   resolve: {
