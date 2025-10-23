@@ -3,6 +3,7 @@
 ## الخطوات الأساسية (5 دقائق فقط):
 
 ### 1️⃣ رفع على GitHub
+
 ```bash
 git init
 git add .
@@ -12,11 +13,13 @@ git push -u origin main
 ```
 
 ### 2️⃣ تفعيل GitHub Pages
+
 1. اذهب إلى **Settings > Pages**
 2. اختر **Source: GitHub Actions**
 3. Done! ✅
 
 ### 3️⃣ التطبيق جاهز!
+
 - الرابط: `https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/`
 - كل push = تحديث تلقائي
 - لا تحتاج لشيء آخر
@@ -27,9 +30,10 @@ git push -u origin main
 
 ✅ **ملف GitHub Actions موجود** في `.github/workflows/deploy.yml`  
 ✅ **Vite config محدث** للعمل على GitHub Pages  
-✅ **Build scripts مضافة** في `package.json`  
+✅ **Build scripts مضافة** في `package.json`
 
 ## 🔗 روابط مفيدة
+
 - [GitHub Pages Documentation](https://docs.github.com/en/pages)
 - [عربي: GITHUB_PAGES_AR.md](./GITHUB_PAGES_AR.md)
 
